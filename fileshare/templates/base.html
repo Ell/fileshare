@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}i.ell.dev{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'site.css' %}">
+    </head>
+    <body>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        {% block scripts %}
+        {% endblock %}
+    </body>
+</html>

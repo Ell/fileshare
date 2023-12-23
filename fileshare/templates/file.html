@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}{{ upload.title }} - {{ upload.file.name }}{% endblock %}
+
+{% block content %}
+{% if upload.file_type == "VIDEO" %}
+<div class="content__image">
+    <video controls width="100%" height="100%">
+        <source src="{{ upload.file.url }}" />
+    </video>
+</div>
+{% elif upload.file_type == "IMAGE" %}
+<div class="content__image">
+    <image src="{{ upload.file.url }}" alt="{{ upload.description }}" />
+</div>
+{% else %}
+<div class="content__file">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <a href="{{ upload.file.url }}">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m9 13.5 3 3m0 0 3-3m-3 3v-6m1.06-4.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+        </a>
+    </svg>
+</div>
+{% endif %}
+<div class="content__info">
+    <div class="content__info__title">{{ upload.title }}</div>
+    <div class="content__info__download">
+        <a href="{{ upload.file.url }}">download</a>
+    </div>
+    {% if user.is_authenticated %}
+    <div class="content__info__edit">
+        <a href="/admin/fileshare/upload/{{ upload.id }}/change/">edit ({{ upload.visibility }})</a>
+    </div>
+    {% endif %}
+    <div class="content__info__tags">
+        {% for tag in tags %}
+        <div class="content__info__tags__tag">
+            <a href="/tag/{{ tag.name }}">#{{ tag.name }}</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
